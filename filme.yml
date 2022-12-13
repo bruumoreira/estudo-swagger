@@ -1,0 +1,211 @@
+openapi: 3.0.3
+info:
+  title: Swagger movies - OpenAPI 3.0
+  description: |-
+    This is a sample movies Server based on the OpenAPI 3.0 specification.  
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://movies.com.br
+tags:
+  - name: movies
+    description: All about your movies
+    externalDocs:
+      description: Find out more about our movies
+      url: http://swagger.io
+paths:
+  /movies/{moviesId}:
+    put:
+      tags:
+        - movies
+      summary: Update an existing movies
+      description: Update an existing movies by Id
+      operationId: updatemovies
+      parameters:
+        - name: moviesId
+          in: path
+          description: movies id to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Update an existing movies in the room
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movies'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Movies'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Movies'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movies'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Movies'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: movies not found
+    get:
+      tags:
+        - movies
+      summary: Find movies by ID
+      description: Returns a movies
+      operationId: getmoviesById
+      parameters:
+        - name: moviesId
+          in: path
+          description: ID of movies to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movies'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Movies'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+    delete:
+      tags:
+        - movies
+      summary: Deletes a movies
+      description: delete a movies
+      operationId: deletemovies
+      parameters:
+        - name: moviesId
+          in: path
+          description: movies id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Deleted
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+  /movies:
+    post:
+        tags:
+          - movies
+        summary: Add a new movies movies in the room
+        description: Add a movies movies in the room
+        operationId: addMovies
+        requestBody:
+          description: Create a new movies in the room
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movies'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Movies'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/Movies'
+          required: true
+        responses:
+          '201':
+            description: movies Created
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Movies'          
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/Movies'
+          '400':
+            description: Invalid ID supplied
+    get:
+      tags:
+        - movies
+      summary: Find movies by name
+      description: Returns a movies
+      operationId: getMoviesByName
+      parameters:
+        - name: moviesName
+          in: query
+          description: ID of movies to return
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: moviesGenre
+          in: query
+          description: ID of movies to return
+          required: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movies'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Movies'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Movies not found
+
+components:
+  schemas:
+    Movies:
+      required:
+        - id
+        - name
+        - genre
+        - year
+        - language
+        - director
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: movies
+        genre:
+          type: string
+          example: action
+        year:
+          type: string
+          example: '05/05/2022'
+        language:
+          type: string
+          example: portuguese
+        director:
+          type: string
+          example: fulano
